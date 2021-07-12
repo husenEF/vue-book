@@ -32,9 +32,10 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'login' }" class="nav-link">
+          <router-link v-if="!isLogin" :to="{ name: 'login' }" class="nav-link">
             Login
           </router-link>
+          <button v-else class="nav-link" @click="logout">Logout</button>
         </li>
         <!-- <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
@@ -45,7 +46,30 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { getApi } from "../../api";
 export default {
   name: "Header",
+  setup() {
+    const token = localStorage.getItem("token");
+    const isLogin = token !== null && token !== "";
+    const router = useRouter();
+
+    const logout = () => {
+      getApi("/users/logout")
+        .then((res) => {
+          console.log({ res });
+          localStorage.removeItem("token");
+          localStorage.removeItem("users");
+          window.location = "/";
+          // router.push({ name: "app.index" });
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => console.log("finish logout"));
+    };
+    return { isLogin, logout };
+  },
 };
 </script>

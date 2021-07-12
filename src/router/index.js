@@ -53,7 +53,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
   linkActiveClass: "active",
 });
@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   // if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
   // // if the user is not authenticated, `next` is called twice
   // next();
-  console.log({ to, isAuthenticated });
+  console.log({ to, token, isAuthenticated });
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.

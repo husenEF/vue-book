@@ -47,6 +47,11 @@ export default {
       password: "",
     });
 
+    setTimeout(() => {
+      user.username = "icp";
+      user.password = "rahasia";
+    }, 1000);
+
     const router = useRouter();
 
     function login() {
@@ -57,7 +62,8 @@ export default {
         .then((res) => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("users", JSON.stringify(res.data.user));
-          router.push({ name: "book.index" });
+          // router.push("/");
+          window.location = "/";
         })
         .catch((err) => {
           console.log({ err });
