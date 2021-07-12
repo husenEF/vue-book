@@ -41,15 +41,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>ok</td>
-            <td>des</td>
-            <td>husen</td>
+          <tr v-for="(book, i) in books" :key="book.id">
+            <td>{{ i + 1 }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{ book.createdBy.fullname }}</td>
             <td>
               <div class="btn-group">
                 <router-link
-                  :to="{ name: 'book.edit', params: { id: 1 } }"
+                  :to="{ name: 'book.edit', params: { id: book.id } }"
                   class="btn btn-sm btn-info"
                 >
                   edit
@@ -63,3 +63,33 @@
     </div>
   </div>
 </template>
+
+<script>
+import { onMounted, ref } from "vue";
+
+import api, { get } from "../../api";
+
+export default {
+  name: "book.list",
+  setup() {
+    // let hardtoke = "3b18bd0194ad9aff857c5af867427cad9d1d2ae3c4d8f00d57ed8e77";
+    let books = ref([]);
+
+    onMounted(() => {
+      get("/books")
+        .then((res) => {
+          // console.log({ res });
+          books.value = res.data.books;
+        })
+        .catch((err) => {
+          console.log({ err });
+        })
+        .finally(() => {
+          console.log("done");
+        });
+    });
+
+    return { books };
+  },
+};
+</script>
