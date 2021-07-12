@@ -67,7 +67,7 @@
 <script>
 import { onMounted, ref } from "vue";
 
-import api, { get } from "../../api";
+import api, { getApi } from "../../api";
 
 export default {
   name: "book.list",
@@ -76,7 +76,7 @@ export default {
     let books = ref([]);
 
     onMounted(() => {
-      get("/books")
+      getApi("/books")
         .then((res) => {
           // console.log({ res });
           books.value = res.data.books;

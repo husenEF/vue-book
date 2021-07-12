@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 
 const routes = [
   {
@@ -9,24 +13,34 @@ const routes = [
   {
     path: "/book",
     name: "book.index",
-    component: () => import("../pages/books/Index.vue"),
-    children: [
-      {
-        path: "",
-        name: "book.list",
-        component: () => import("../pages/books/List.vue"),
-      },
-      {
-        path: "/edit/:id",
-        name: "book.edit",
-        component: () => import("../pages/books/Edit.vue"),
-      },
-      {
-        path: "/create",
-        name: "book.create",
-        component: () => import("../pages/books/Create.vue"),
-      },
-    ],
+    component: () => import("../pages/books/List.vue"),
+    // childredn: [
+    //   {
+    //     path: "",
+    //     // name: "book.list",
+    //     component: () => import("../pages/books/List.vue"),
+    //   },
+    //   {
+    //     path: "edit/:id",
+    //     name: "book.edit",
+    //     component: () => import("../pages/books/Edit.vue"),
+    //   },
+    //   {
+    //     path: "create",
+    //     name: "book.create",
+    //     component: () => import("../pages/books/Create.vue"),
+    //   },
+    // ],
+  },
+  {
+    path: "/create",
+    name: "book.create",
+    component: () => import("../pages/books/Create.vue"),
+  },
+  {
+    path: "/book/:id",
+    name: "book.edit",
+    component: () => import("../pages/books/Edit.vue"),
   },
   {
     path: "/login",

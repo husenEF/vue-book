@@ -11,7 +11,9 @@ instance.interceptors.request.use(
 
     // console.log({ config });
     // config.params["token"] = token;
-    config.params = { ...config.params, token };
+    if (config.url !== "/users/login") {
+      config.params = { ...config.params, token };
+    }
     // console.log({ config });
     return config;
   },
@@ -23,7 +25,11 @@ instance.interceptors.request.use(
 
 const handlingResponse = (response) => response.data;
 
-export const get = async (url = "/", params = {}) => {
+export const getApi = async (url = "/", params = {}) => {
   return await instance.get(url, params).then(handlingResponse);
+};
+
+export const postApi = async (url = "/", body = {}, params = {}) => {
+  return await instance.post(url, body, { params }).then(handlingResponse);
 };
 export default instance;
