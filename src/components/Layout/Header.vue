@@ -37,6 +37,11 @@
           </router-link>
           <button v-else class="nav-link" @click="logout">Logout</button>
         </li>
+        <li v-if="isLogin" class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'user.me' }"
+            >Me</router-link
+          >
+        </li>
         <!-- <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->

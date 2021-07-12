@@ -40,15 +40,27 @@ const routes = [
     component: () => import("../pages/books/Create.vue"),
   },
   {
-    path: "/book/:id",
+    path: "/book/edit/:id",
     name: "book.edit",
     meta: { requiresAuth: true },
     component: () => import("../pages/books/Edit.vue"),
   },
   {
+    path: "/book/detail/:id",
+    name: "book.detail",
+    meta: { requiresAuth: true },
+    component: () => import("../pages/books/Detail.vue"),
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../pages/login/Index.vue"),
+  },
+  {
+    path: "/me",
+    name: "user.me",
+    meta: { requiresAuth: true },
+    component: () => import("../pages/users/Index.vue"),
   },
 ];
 

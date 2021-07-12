@@ -50,9 +50,15 @@
               <div class="btn-group">
                 <router-link
                   :to="{ name: 'book.edit', params: { id: book.id } }"
-                  class="btn btn-sm btn-info"
+                  class="btn btn-sm btn-success"
                 >
                   edit
+                </router-link>
+                <router-link
+                  :to="{ name: 'book.detail', params: { id: book.id } }"
+                  class="btn btn-sm btn-info"
+                >
+                  detail
                 </router-link>
                 <button class="btn btn-danger btn-sm">delete</button>
               </div>
