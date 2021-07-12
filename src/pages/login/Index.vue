@@ -37,6 +37,7 @@
 
 <script>
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
 import { onMounted, toRefs } from "@vue/runtime-core";
 import { postApi } from "../../api";
 export default {
@@ -46,6 +47,8 @@ export default {
       password: "",
     });
 
+    const router = useRouter();
+
     function login() {
       const form = new FormData();
       form.append("username", user.username);
@@ -54,6 +57,7 @@ export default {
         .then((res) => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("users", JSON.stringify(res.data.user));
+          router.push({ name: "book.index" });
         })
         .catch((err) => {
           console.log({ err });

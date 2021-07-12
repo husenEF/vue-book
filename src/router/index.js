@@ -13,6 +13,7 @@ const routes = [
   {
     path: "/book",
     name: "book.index",
+    meta: { requiresAuth: true },
     component: () => import("../pages/books/List.vue"),
     // childredn: [
     //   {
@@ -35,11 +36,13 @@ const routes = [
   {
     path: "/create",
     name: "book.create",
+    meta: { requiresAuth: true },
     component: () => import("../pages/books/Create.vue"),
   },
   {
     path: "/book/:id",
     name: "book.edit",
+    meta: { requiresAuth: true },
     component: () => import("../pages/books/Edit.vue"),
   },
   {
@@ -53,6 +56,31 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   linkActiveClass: "active",
+});
+const token = localStorage.getItem("token");
+
+const isAuthenticated = token !== null && token !== "";
+
+router.beforeEach((to, from, next) => {
+  // if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
+  // // if the user is not authenticated, `next` is called twice
+  // next();
+  console.log({ to, isAuthenticated });
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!isAuthenticated) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+  // next();
 });
 
 export default router;
