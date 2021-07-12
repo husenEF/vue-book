@@ -12,7 +12,7 @@ const routes = [
     component: () => import("../pages/books/Index.vue"),
     children: [
       {
-        path: "/",
+        path: "",
         name: "book.list",
         component: () => import("../pages/books/List.vue"),
       },
@@ -20,6 +20,11 @@ const routes = [
         path: "/edit/:id",
         name: "book.edit",
         component: () => import("../pages/books/Edit.vue"),
+      },
+      {
+        path: "/create",
+        name: "book.create",
+        component: () => import("../pages/books/Create.vue"),
       },
     ],
   },

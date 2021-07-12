@@ -31,6 +31,11 @@
             Book
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'login' }" class="nav-link">
+            Login
+          </router-link>
+        </li>
         <!-- <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->
