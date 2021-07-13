@@ -19,14 +19,16 @@
 <script>
 import { computed, reactive, ref } from "vue";
 import { onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 // import { getApi } from "../../api";
-import store from "../../store";
+// import store from "../../store";
 export default {
   onMounted() {
     console.log("on mounted");
   },
   setup() {
+    const store = useStore();
     let book = computed(() => store.state.books.book);
     const fetSingle = (id) => store.dispatch("getBook", id);
     const route = useRoute();

@@ -21,10 +21,30 @@ const books = {
     setLoading(state, payload) {
       state.loading = payload;
     },
+    setBook(state, payload) {
+      console.log({ payload });
+      const data = state;
+      data.book[payload.key] = payload.value;
+      state = data;
+    },
   },
   actions: {
     delBook: async ({ commit }, payload) => {
       //delete not found in api
+    },
+    updateBook: async ({ commit }) => {
+      commit("setLoading", true);
+      postApi("/books/edit")
+        .then((res) => {
+          console.log("update", { res });
+        })
+        .catch((err) => {
+          console.log("update", { err });
+        })
+        .finally(() => {
+          console.log("update", "final");
+          commit("setLoading", false);
+        });
     },
     getBook: async ({ commit }, id) => {
       commit("setLoading", true);
@@ -40,12 +60,7 @@ const books = {
             description,
             id,
           };
-          // const { id, createdBy, name, description } = res.data;
-          //   console.log({ id, createdBy, name, description });
-          // book.author = createdBy;
-          // book.description = description;
-          // book.name = name;
-          // book.id = id;
+
           commit("setData", { key: "book", value: book });
         })
         .catch((err) => {
