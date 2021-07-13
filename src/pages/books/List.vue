@@ -30,7 +30,8 @@
         "name": "Gul Gul"
       },
        -->
-      <table class="table">
+      <p v-show="bookLists.loading">Loading....</p>
+      <table class="table" v-show="!bookLists.loading">
         <thead>
           <tr>
             <th>No</th>
@@ -41,7 +42,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(book, i) in books" :key="book.id">
+          <tr v-for="(book, i) in bookLists.data" :key="book.id">
             <td>{{ i + 1 }}</td>
             <td>{{ book.name }}</td>
             <td>{{ book.description }}</td>
@@ -71,32 +72,37 @@
 </template>
 
 <script>
-
-import { onMounted, ref } from "vue";
-
-import api, { getApi } from "../../api";
+import { useStore } from "vuex";
+import { computed, onMounted, reactive, ref, toRefs } from "vue";
 
 export default {
   name: "book.list",
   setup() {
     // let hardtoke = "3b18bd0194ad9aff857c5af867427cad9d1d2ae3c4d8f00d57ed8e77";
     let books = ref([]);
-
+    const bookLists = computed(() => store.state.books);
+    const fetchBook = () => store.dispatch("getData");
+    const store = useStore();
     onMounted(() => {
-      getApi("/books")
-        .then((res) => {
-          // console.log({ res });
-          books.value = res.data.books;
-        })
-        .catch((err) => {
-          console.log({ err });
-        })
-        .finally(() => {
-          console.log("done");
-        });
+      fetchBook();
+
+      //wthout vuex
+      // getApi("/books")
+      //   .then((res) => {
+      //     // console.log({ res });
+      //     books.value = res.data.books;
+      //   })
+      //   .catch((err) => {
+      //     console.log({ err });
+      //   })
+      //   .finally(() => {
+      //     console.log("done");
+      //   });
     });
 
-    return { books };
+    console.log({ bookLists });
+
+    return { books, bookLists };
   },
 };
 </script>
