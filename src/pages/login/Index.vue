@@ -40,7 +40,7 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { computed, onUpdated, toRefs } from "@vue/runtime-core";
+import { computed, onUpdated, toRefs, watch } from "@vue/runtime-core";
 
 export default {
   setup() {
@@ -50,13 +50,22 @@ export default {
       password: "",
     });
 
-    const userData = computed(() => store.state.user);
+    setTimeout(() => {
+      userForm.username = "icp";
+      userForm.password = "rahasia";
+    }, 1000);
+
+    const userData = reactive(computed(() => store.state.user));
     const router = useRouter();
 
-    onUpdated(() => {});
+    // onUpdated(() => {});
+    //belm bisa redirect
     if (userData.isLogin && userData.token !== "") {
+      console.log("ok", { userData });
       router.push("/");
     }
+
+    console.log("ookkk", { userForm, userData });
 
     const sendLogin = () => {
       const form = new FormData();
