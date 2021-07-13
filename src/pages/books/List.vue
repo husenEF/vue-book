@@ -1,16 +1,17 @@
 <template>
-  <div class="card rounded shadow">
-    <div class="card-header">
-      Book List
+  <div class="col">
+    <div class="card rounded shadow">
+      <div class="card-header">
+        Book List
 
-      <router-link
-        :to="{ name: 'book.create' }"
-        class="btn btn-primary float-right"
-        >Add
-      </router-link>
-    </div>
-    <div class="card-body">
-      <!--
+        <router-link
+          :to="{ name: 'book.create' }"
+          class="btn btn-primary float-right"
+          >Add
+        </router-link>
+      </div>
+      <div class="card-body">
+        <!--
        {
         "createdAt": 1580812938,
         "createdBy": {
@@ -30,43 +31,46 @@
         "name": "Gul Gul"
       },
        -->
-      <p v-show="bookLists.loading">Loading....</p>
-      <table class="table" v-show="!bookLists.loading">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Author</th>
-            <th>action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(book, i) in bookLists.data" :key="book.id">
-            <td>{{ i + 1 }}</td>
-            <td>{{ book.name }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{ book.createdBy.fullname }}</td>
-            <td>
-              <div class="btn-group">
-                <router-link
-                  :to="{ name: 'book.edit', params: { id: book.id } }"
-                  class="btn btn-sm btn-success"
-                >
-                  edit
-                </router-link>
-                <router-link
-                  :to="{ name: 'book.detail', params: { id: book.id } }"
-                  class="btn btn-sm btn-info"
-                >
-                  detail
-                </router-link>
-                <button class="btn btn-danger btn-sm">delete</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <p v-show="bookLists.loading">Loading....</p>
+        <table class="table" v-show="!bookLists.loading">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Author</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(book, i) in bookLists.data" :key="book.id">
+              <td>{{ i + 1 }}</td>
+              <td>{{ book.name }}</td>
+              <td>{{ book.description }}</td>
+              <td>{{ book.createdBy.fullname }}</td>
+              <td>
+                <div class="btn-group">
+                  <router-link
+                    :to="{ name: 'book.edit', params: { id: book.id } }"
+                    class="btn btn-sm btn-success"
+                  >
+                    edit
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'book.detail', params: { id: book.id } }"
+                    class="btn btn-sm btn-info"
+                  >
+                    detail
+                  </router-link>
+                  <!-- <button class="btn btn-danger btn-sm">
+                  delete
+                </button> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +88,7 @@ export default {
     const fetchBook = () => store.dispatch("getData");
     const store = useStore();
     onMounted(() => {
+      // if (bookLists.data.length == 0)
       fetchBook();
 
       //wthout vuex
