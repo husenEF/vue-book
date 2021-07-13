@@ -1,8 +1,8 @@
 <template>
   <div class="col-12 h-100">
     <div class="row justify-content-md-center">
-      <div class="col-md-4">
-        <form @submit.prevent="login()">
+      <div class="col-md-6">
+        <form @submit.prevent="sendLogin()">
           <div class="card">
             <div class="card-header">Login</div>
             <div class="card-body">
@@ -31,6 +31,7 @@
           </div>
         </form>
       </div>
+      <pre>{{ userData }}</pre>
     </div>
   </div>
 </template>
@@ -38,42 +39,33 @@
 <script>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import { onMounted, toRefs } from "@vue/runtime-core";
-import { postApi } from "../../api";
+import { useStore } from "vuex";
+import { computed, onUpdated, toRefs } from "@vue/runtime-core";
+
 export default {
   setup() {
-    const user = reactive({
+    const store = useStore();
+    const userForm = reactive({
       username: "",
       password: "",
     });
 
-    setTimeout(() => {
-      user.username = "icp";
-      user.password = "rahasia";
-    }, 1000);
-
+    const userData = computed(() => store.state.user);
     const router = useRouter();
 
-    function login() {
-      const form = new FormData();
-      form.append("username", user.username);
-      form.append("password", user.password);
-      postApi("/users/login", form)
-        .then((res) => {
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("users", JSON.stringify(res.data.user));
-          // router.push("/");
-          window.location = "/";
-        })
-        .catch((err) => {
-          console.log({ err });
-        })
-        .finally(() => {
-          console.log("done login");
-        });
+    onUpdated(() => {});
+    if (userData.isLogin && userData.token !== "") {
+      router.push("/");
     }
 
-    return { ...toRefs(user), login };
+    const sendLogin = () => {
+      const form = new FormData();
+      form.append("username", userForm.username);
+      form.append("password", userForm.password);
+      return store.dispatch("login", form);
+    };
+
+    return { ...toRefs(userForm), sendLogin, userData };
   },
 };
 </script>
