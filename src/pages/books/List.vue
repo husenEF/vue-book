@@ -71,6 +71,7 @@
 </template>
 
 <script>
+
 import { onMounted, ref } from "vue";
 
 import api, { getApi } from "../../api";
