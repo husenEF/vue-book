@@ -1,9 +1,7 @@
 <template>
   <h2>Home pages</h2>
   <p>count : {{ count }}</p>
-  <pre>
-    {{ count }}
-  </pre>
+  
   <div class="btn-group">
     <button class="btn btn-sm btn-info">dec</button>
     <button class="btn btn-sm btn-warning" @click="inc()">inc</button>

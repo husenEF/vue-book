@@ -6,7 +6,6 @@
           <div class="card">
             <div class="card-header">Login</div>
             <div class="card-body">
-              <pre>{{ username }}</pre>
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input
@@ -31,7 +30,6 @@
           </div>
         </form>
       </div>
-      <pre>{{ userData }}</pre>
     </div>
   </div>
 </template>
